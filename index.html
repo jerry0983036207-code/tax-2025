@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,16 +25,20 @@
             position: sticky;
             left: 0;
             z-index: 10;
-            /* 確保背景色遮擋後面的內容 */
         }
         
-        /* 隱藏捲軸但保留功能 (Optional) */
+        /* 隱藏捲軸但保留功能 */
         .no-scrollbar::-webkit-scrollbar {
             height: 4px;
         }
         .no-scrollbar::-webkit-scrollbar-thumb {
             background-color: rgba(0,0,0,0.2);
             border-radius: 4px;
+        }
+
+        /* 導覽列隱藏捲軸 */
+        .nav-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         @media print {
@@ -50,12 +54,10 @@
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            /* Ensure background colors print */
             * {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            /* 修正列印時的表格顯示 */
             .overflow-x-auto {
                 overflow-x: visible !important;
             }
@@ -82,6 +84,21 @@
 </head>
 <body class="bg-gray-100 md:p-8 p-0 pb-32">
 
+    <!-- Sticky Navigation Bar (New) -->
+    <div class="no-print fixed top-0 left-0 w-full bg-white shadow-md z-40 overflow-x-auto nav-scroll">
+        <div class="flex whitespace-nowrap p-3 md:justify-center gap-4 text-sm md:text-base font-bold text-gray-700">
+            <a href="#section-top" class="hover:text-blue-600">首頁</a>
+            <a href="#section-refund" class="hover:text-blue-600">重購退稅</a>
+            <a href="#section-land" class="hover:text-blue-600">土增稅</a>
+            <a href="#section-house" class="hover:text-blue-600">房地合一</a>
+            <a href="#section-holding" class="text-green-600 hover:text-green-800">持有稅(新)</a>
+            <a href="#section-gift" class="hover:text-blue-600">繼承贈與</a>
+            <a href="#section-risk" class="text-red-600 hover:text-red-800">隱藏風險</a>
+            <a href="#section-luxury" class="hover:text-blue-600">豪宅稅</a>
+            <a href="#section-old" class="hover:text-blue-600">財產交易所得稅</a>
+        </div>
+    </div>
+
     <!-- Floating Line Button -->
     <a href="https://line.me/ti/p/msIk4x7U95" target="_blank" class="no-print fixed bottom-6 right-4 md:bottom-8 md:right-8 bg-[#06c755] hover:bg-[#05b54b] text-white font-bold py-3 px-5 md:py-4 md:px-6 rounded-full shadow-2xl flex items-center gap-3 z-50 transition-transform hover:scale-105 btn-pulse cursor-pointer no-underline font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="md:w-8 md:h-8">
@@ -93,13 +110,20 @@
         </div>
     </a>
 
+    <!-- Back to Top Button -->
+    <a href="#section-top" class="no-print fixed bottom-24 right-6 md:bottom-28 md:right-10 bg-gray-600 hover:bg-gray-800 text-white p-3 rounded-full shadow-lg z-40 transition-opacity opacity-80 hover:opacity-100">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </a>
+
     <!-- Container -->
-    <div class="container mx-auto max-w-5xl bg-white shadow-xl min-h-screen mt-0 md:mt-4 p-4 md:p-12">
+    <div class="container mx-auto max-w-5xl bg-white shadow-xl min-h-screen mt-12 md:mt-16 p-4 md:p-12">
         
         <!-- Page 1: Cover -->
-        <div class="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center border-b-4 border-double border-blue-800 mb-8 md:mb-12 relative py-8">
+        <div id="section-top" class="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center border-b-4 border-double border-blue-800 mb-8 md:mb-12 relative py-8">
             <h1 class="text-3xl md:text-6xl font-bold theme-blue mb-4 md:mb-8">Lung哥的<br class="md:hidden">房地產稅務全攻略</h1>
-            <h2 class="text-lg md:text-2xl text-gray-600 mb-4 px-2 md:px-12 leading-relaxed">重購退稅 ｜ 土地增值稅 ｜ 房地合一 ｜ 遺產贈與 ｜ 高價住宅 ｜ 舊制財交稅</h2>
+            <h2 class="text-lg md:text-2xl text-gray-600 mb-4 px-2 md:px-12 leading-relaxed">重購退稅 ｜ 土地增值稅 ｜ 房地合一 ｜ 遺產贈與 ｜ 高價住宅 ｜ 持有稅</h2>
             <div class="bg-red-50 text-red-700 px-4 md:px-6 py-2 rounded-full mt-4 font-bold border border-red-200 text-sm md:text-base">
                 特別收錄：繼承/贈與在房地合一稅 2.0 下的隱藏風險
             </div>
@@ -108,11 +132,10 @@
         </div>
 
         <!-- Page 2: 重購退稅 -->
-        <div class="page-break mb-12 md:mb-16">
+        <div id="section-refund" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">重購退稅：三大稅制比較</h2>
             
             <div class="relative">
-                <!-- Scroll Hint (Right Shadow) -->
                 <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
                 
                 <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
@@ -120,7 +143,6 @@
                         <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center table-fixed">
                             <thead>
                                 <tr class="bg-theme-orange">
-                                    <!-- Sticky Column Header -->
                                     <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-24 md:w-auto sticky-col bg-theme-orange z-20">項目</th>
                                     <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">土地增值稅</th>
                                     <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">舊制財產交易所得稅</th>
@@ -129,7 +151,6 @@
                             </thead>
                             <tbody class="text-sm md:text-base">
                                 <tr>
-                                    <!-- Sticky Column Cell -->
                                     <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">狀態</td>
                                     <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
                                     <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
@@ -174,7 +195,7 @@
         </div>
 
         <!-- Page 3: 土地增值稅 -->
-        <div class="page-break mb-12 md:mb-16">
+        <div id="section-land" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">土地增值稅：優惠稅率 10%</h2>
             <div class="relative">
                 <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
@@ -223,7 +244,7 @@
         </div>
 
         <!-- Page 4: 房地合一稅 -->
-        <div class="page-break mb-12 md:mb-16">
+        <div id="section-house" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">房地合一稅：400 萬免稅額 & 稅率</h2>
             <div class="bg-white border-4 border-double border-blue-200 p-4 md:p-8 rounded-lg shadow-sm">
                 <p class="text-center text-lg md:text-xl mb-6 md:mb-8 font-bold text-gray-700">根據《所得稅法》第 4 條之 5 規定，要享有 400 萬免稅額，必須同時符合以下條件：</p>
@@ -243,7 +264,6 @@
                 </div>
             </div>
 
-            <!-- NEW: 房地合一稅稅率表 -->
             <div class="mt-8 border-t-2 border-dashed border-blue-200 pt-6">
                 <h3 class="text-xl md:text-2xl font-bold theme-blue text-center mb-4">房地合一稅 2.0 課稅稅率 (持有年限標準)</h3>
                 <div class="overflow-x-auto -mx-4 md:mx-0">
@@ -281,10 +301,76 @@
             </div>
         </div>
 
-        <!-- Page 5: 遺產繼承 & 夫妻贈與 (Basic) -->
-        <div class="page-break mb-12 md:mb-16">
-            <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">遺產繼承 & 夫妻贈與 (土增稅優惠)</h2>
+        <!-- NEW: 持有稅小學堂 (房屋稅 & 地價稅) -->
+        <div id="section-holding" class="page-break mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="text-2xl md:text-3xl font-bold text-green-700 text-center mb-6 md:mb-8 border-b-2 border-green-200 pb-2">持有稅小學堂 (每年要繳的稅)</h2>
             
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                <!-- 地價稅 -->
+                <div class="border-2 border-green-200 rounded-xl p-4 md:p-6 bg-white shadow-sm">
+                    <h3 class="text-xl md:text-2xl font-bold text-green-800 text-center mb-4 flex items-center justify-center gap-2">
+                        <span>🌳 地價稅</span>
+                        <span class="text-sm font-normal text-gray-500">(每年11月繳)</span>
+                    </h3>
+                    <div class="bg-green-50 p-4 rounded-lg mb-4 text-center">
+                        <p class="font-bold text-lg">重要截止日：每年 9 月 22 日</p>
+                        <p class="text-sm text-gray-600">務必在此之前申請自用住宅優惠</p>
+                    </div>
+                    <table class="w-full text-center border-collapse border border-gray-300 text-sm md:text-base">
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 p-2">類別</th>
+                            <th class="border border-gray-300 p-2">稅率</th>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-bold text-green-700">自用住宅用地</td>
+                            <td class="border border-gray-300 p-2 font-bold text-xl text-green-700">2 ‰</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2">一般用地</td>
+                            <td class="border border-gray-300 p-2">10 ‰ ~ 55 ‰</td>
+                        </tr>
+                    </table>
+                    <p class="text-xs text-red-500 mt-2 text-center">*自用稅率相差 5 倍以上，一定要申請！</p>
+                </div>
+
+                <!-- 房屋稅 (囤房稅 2.0) -->
+                <div class="border-2 border-blue-200 rounded-xl p-4 md:p-6 bg-white shadow-sm">
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-800 text-center mb-4 flex items-center justify-center gap-2">
+                        <span>🏠 房屋稅 2.0</span>
+                        <span class="text-sm font-normal text-gray-500">(每年5月繳)</span>
+                    </h3>
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4 text-center">
+                        <p class="font-bold text-lg">囤房稅 2.0 已上路</p>
+                        <p class="text-sm text-gray-600">非自住稅率全面調升</p>
+                    </div>
+                    <table class="w-full text-center border-collapse border border-gray-300 text-sm md:text-base">
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 p-2">類別</th>
+                            <th class="border border-gray-300 p-2">稅率</th>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 text-left px-4">
+                                <b>全國單一自住</b><br>
+                                <span class="text-xs text-gray-500">(本人/配偶/未成年子女全國僅1戶)</span>
+                            </td>
+                            <td class="border border-gray-300 p-2 font-bold text-lg text-blue-700">1.0 %</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 text-left px-4"><b>其他自住</b></td>
+                            <td class="border border-gray-300 p-2 font-bold text-blue-700">1.2 %</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 text-left px-4 text-red-700"><b>非自住 (囤房)</b></td>
+                            <td class="border border-gray-300 p-2 font-bold text-red-600">2.0 % ~ 4.8 %</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: 遺產繼承 & 夫妻贈與 -->
+        <div id="section-gift" class="page-break mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">遺產繼承 & 夫妻贈與 (土增稅優惠)</h2>
             <div class="grid md:grid-cols-2 gap-4 md:gap-8">
                 <div class="border border-gray-300 rounded p-4 md:p-6 bg-gray-50 text-center">
                     <h3 class="text-xl md:text-2xl font-bold theme-blue mb-2 md:mb-4">遺產繼承</h3>
@@ -294,7 +380,6 @@
                     <hr class="my-3 md:my-4 border-gray-300">
                     <p class="text-sm text-gray-500">若經核定「免徵」的話<br>就<span class="font-bold text-gray-800">不用再課徵土地增值稅</span>。</p>
                 </div>
-
                 <div class="border border-gray-300 rounded p-4 md:p-6 bg-gray-50 text-center">
                     <h3 class="text-xl md:text-2xl font-bold theme-blue mb-2 md:mb-4">夫妻贈與</h3>
                     <p class="mb-2 md:mb-4 text-gray-700">依土地稅法第 28 條之 2 規定<br>配偶相互贈與之土地</p>
@@ -306,8 +391,8 @@
             </div>
         </div>
 
-        <!-- Page 6: 繼承與贈與的隱藏風險 (NEW) -->
-        <div class="page-break mb-12 md:mb-16">
+        <!-- Page 6: 繼承與贈與的隱藏風險 (Risk) -->
+        <div id="section-risk" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold text-red-700 text-center mb-6 md:mb-8 border-b-2 border-red-200 pb-2">⚠️ 重要：繼承與贈與的未來風險<br class="md:hidden"><span class="text-lg md:text-3xl">(房地合一稅 2.0)</span></h2>
             
             <div class="bg-red-50 border-l-8 border-red-600 p-4 md:p-6 mb-6 md:mb-8 shadow-sm">
@@ -367,12 +452,9 @@
             </div>
             <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
 
-            <!-- NEW: 新舊制判斷圖表 -->
             <div class="bg-blue-50 p-4 md:p-8 rounded-xl border-2 border-blue-200 mt-8 md:mt-12">
                 <h3 class="text-xl md:text-2xl font-bold theme-blue text-center mb-6">🔍 繼承/贈與後出售：<br class="md:hidden">適用新制還是舊制？</h3>
                 <div class="flex flex-col md:flex-row gap-6 items-stretch justify-center text-center">
-                    
-                    <!-- Old System Path -->
                     <div class="flex-1 bg-white p-4 md:p-6 rounded shadow border-t-4 border-green-500">
                         <div class="bg-green-100 text-green-800 font-bold py-2 rounded mb-4 text-sm md:text-base">被繼承人/贈與人<br>取得日期</div>
                         <p class="text-3xl md:text-4xl font-bold text-gray-700 mb-2">104/12/31</p>
@@ -384,13 +466,7 @@
                             <span class="text-red-500 font-bold">*例外：</span>繼承案件若符合自住條件，繼承人亦可選擇新制申報(擇優適用)。
                         </div>
                     </div>
-
-                    <!-- Divider -->
-                    <div class="flex items-center justify-center font-bold text-gray-400 text-xl py-2 md:py-0">
-                        VS
-                    </div>
-
-                    <!-- New System Path -->
+                    <div class="flex items-center justify-center font-bold text-gray-400 text-xl py-2 md:py-0">VS</div>
                     <div class="flex-1 bg-white p-4 md:p-6 rounded shadow border-t-4 border-red-500">
                         <div class="bg-red-100 text-red-800 font-bold py-2 rounded mb-4 text-sm md:text-base">被繼承人/贈與人<br>取得日期</div>
                         <p class="text-3xl md:text-4xl font-bold text-gray-700 mb-2">105/1/1</p>
@@ -402,11 +478,7 @@
                             <span class="font-bold">關鍵點：</span>成本認定為繼承/受贈時的<span class="text-red-600">公告現值</span>，稅負極重。
                         </div>
                     </div>
-
                 </div>
-                <p class="text-center text-sm text-gray-500 mt-6">
-                    註：繼承取得之持有期間可合併計算 (被繼承人持有時間 + 繼承人持有時間)
-                </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 md:gap-8 mt-8 md:mt-12">
@@ -428,8 +500,8 @@
             </div>
         </div>
 
-        <!-- Page 7: 高價住宅 -->
-        <div class="page-break mb-12 md:mb-16">
+        <!-- Page 7: 高價住宅 (Luxury) -->
+        <div id="section-luxury" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">高價住宅課稅新制</h2>
             <div class="relative">
                 <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
@@ -497,8 +569,8 @@
             <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
         </div>
 
-        <!-- Page 8: 舊制財產交易所得稅 -->
-        <div class="page-break mb-12 md:mb-16">
+        <!-- Page 8: 舊制財產交易所得稅 (Old System) -->
+        <div id="section-old" class="page-break mb-12 md:mb-16 scroll-mt-20">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-2">舊制財產交易所得稅 (新增內容)</h2>
             <p class="text-center text-gray-500 mb-6 md:mb-8">適用對象：民國 104 年 12 月 31 日前取得之房屋</p>
             
