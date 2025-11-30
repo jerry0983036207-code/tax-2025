@@ -18,6 +18,25 @@
         .page-break {
             break-before: page;
         }
+        
+        /* 表格首欄凍結樣式 */
+        .sticky-col {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            /* 確保背景色遮擋後面的內容 */
+        }
+        
+        /* 隱藏捲軸但保留功能 (Optional) */
+        .no-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .no-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+
         @media print {
             .no-print {
                 display: none;
@@ -39,6 +58,9 @@
             /* 修正列印時的表格顯示 */
             .overflow-x-auto {
                 overflow-x: visible !important;
+            }
+            .sticky-col {
+                position: static !important;
             }
         }
         .theme-blue { color: #1f4e79; }
@@ -88,102 +110,113 @@
         <!-- Page 2: 重購退稅 -->
         <div class="page-break mb-12 md:mb-16">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">重購退稅：三大稅制比較</h2>
-            <div class="overflow-x-auto -mx-4 md:mx-0 pb-2">
-                <div class="inline-block min-w-full align-middle px-4 md:px-0">
-                    <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center">
-                        <thead>
-                            <tr class="bg-theme-orange">
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">項目</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">土地增值稅</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">舊制財產交易所得稅</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">房地合一稅 (新制)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm md:text-base">
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">狀態</td>
-                                <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
-                                <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
-                                <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">設籍</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>直系親屬</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>受扶養直系親屬</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>未成年子女</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">面積</td>
-                                <td class="border border-gray-400 p-2 md:p-4">都內：300平方公尺<br>都外：700平方公尺</td>
-                                <td class="border border-gray-400 p-2 md:p-4">無限制</td>
-                                <td class="border border-gray-400 p-2 md:p-4">無限制</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">時限</td>
-                                <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
-                                <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
-                                <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">產權</td>
-                                <td class="border border-gray-400 p-2 md:p-4 font-bold text-red-600">需為同一人</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人或配偶</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人或配偶</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">管制</td>
-                                <td class="border border-gray-400 p-2 md:p-4">管制五年</td>
-                                <td class="border border-gray-400 p-2 md:p-4">無限制</td>
-                                <td class="border border-gray-400 p-2 md:p-4">管制五年</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            
+            <div class="relative">
+                <!-- Scroll Hint (Right Shadow) -->
+                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
+                
+                <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
+                    <div class="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center table-fixed">
+                            <thead>
+                                <tr class="bg-theme-orange">
+                                    <!-- Sticky Column Header -->
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-24 md:w-auto sticky-col bg-theme-orange z-20">項目</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">土地增值稅</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">舊制財產交易所得稅</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">房地合一稅 (新制)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <!-- Sticky Column Cell -->
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">狀態</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 bg-theme-orange bg-opacity-20">自用且前一年<br>無出租或供營業使用</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">設籍</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>直系親屬</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>受扶養直系親屬</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>未成年子女</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">面積</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">都內：300平方公尺<br>都外：700平方公尺</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">無限制</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">無限制</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">時限</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">2年<br>(依登記日起算)</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">產權</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 font-bold text-red-600">需為同一人</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人或配偶</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人或配偶</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">管制</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">管制五年</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">無限制</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">管制五年</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
+            <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看完整表格 →</p>
         </div>
 
         <!-- Page 3: 土地增值稅 -->
         <div class="page-break mb-12 md:mb-16">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">土地增值稅：優惠稅率 10%</h2>
-            <div class="overflow-x-auto -mx-4 md:mx-0 pb-2">
-                <div class="inline-block min-w-full align-middle px-4 md:px-0">
-                    <table class="min-w-[500px] md:min-w-full border-collapse border border-gray-400 text-center">
-                        <thead>
-                            <tr class="bg-theme-gold">
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-1/6">項目</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12 bg-green-50">一生一次 (10%)</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">一生一屋 (10%)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm md:text-base">
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">狀態</td>
-                                <td class="border border-gray-400 p-2 md:p-4">自用且前 1 年<br>無出租或供營業使用</td>
-                                <td class="border border-gray-400 p-2 md:p-4">自用且前 5 年<br>無出租或供營業使用<br>並持有 6 年以上</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">設籍</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>直系親屬</td>
-                                <td class="border border-gray-400 p-2 md:p-4">本人、配偶、未成年子女<br>連續滿 6 年</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">面積</td>
-                                <td class="border border-gray-400 p-2 md:p-4">都內：300平方公尺<br>都外：700平方公尺</td>
-                                <td class="border border-gray-400 p-2 md:p-4">都內：150平方公尺<br>都外：350平方公尺</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">限制</td>
-                                <td class="border border-gray-400 p-2 md:p-4 font-bold">一生一次</td>
-                                <td class="border border-gray-400 p-2 md:p-4">無次數限制<br><span class="text-sm text-gray-500">(但審核嚴格)</span></td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap">特別</td>
-                                <td class="border border-gray-400 p-2 md:p-4">可多筆一次辦理</td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">出售時土地所有權人與其配偶及未成年子女，無該自用住宅以外房屋</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="relative">
+                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
+                <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
+                    <div class="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table class="min-w-[500px] md:min-w-full border-collapse border border-gray-400 text-center">
+                            <thead>
+                                <tr class="bg-theme-gold">
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-20 md:w-1/6 sticky-col bg-theme-gold z-20">項目</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12 bg-green-50">一生一次 (10%)</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">一生一屋 (10%)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">狀態</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">自用且前 1 年<br>無出租或供營業使用</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">自用且前 5 年<br>無出租或供營業使用<br>並持有 6 年以上</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">設籍</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人、配偶<br>直系親屬</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">本人、配偶、未成年子女<br>連續滿 6 年</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">面積</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">都內：300平方公尺<br>都外：700平方公尺</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">都內：150平方公尺<br>都外：350平方公尺</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">限制</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 font-bold">一生一次</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">無次數限制<br><span class="text-sm text-gray-500">(但審核嚴格)</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 whitespace-nowrap sticky-col z-10 shadow-sm">特別</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">可多筆一次辦理</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">出售時土地所有權人與其配偶及未成年子女，無該自用住宅以外房屋</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
@@ -282,51 +315,54 @@
                 <p class="text-gray-700">在房地合一稅 2.0 新制下，取得成本的認定非常嚴格。若透過「繼承」或「贈與」取得房產，未來出售時，<b>取得成本將以「公告現值」計算，而非市價。</b></p>
             </div>
 
-            <div class="overflow-x-auto -mx-4 md:mx-0 pb-2">
-                <div class="inline-block min-w-full align-middle px-4 md:px-0">
-                    <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center mb-4 md:mb-8">
-                        <thead>
-                            <tr class="bg-gray-200">
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">情境</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg text-red-700">取得成本認定 (魔鬼細節)</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">未來出售影響</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm md:text-base">
-                            <tr>
-                                <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4">繼承取得</td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
-                                    繼承時的<br>
-                                    <b>1. 房屋評定現值</b><br>
-                                    <b>2. 土地公告現值</b>
-                                </td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-6 text-gray-700 bg-white" rowspan="3">
-                                    <p class="mb-2 md:mb-4 text-center font-bold text-red-600 text-lg md:text-xl border-b pb-2">三者風險一致</p>
-                                    <p class="mb-2">因公告現值通常遠低於市價 (可能僅市價 30%)，導致：</p>
-                                    <ul class="list-disc pl-5 space-y-1">
-                                        <li class="font-bold text-red-600">獲利金額被大幅放大</li>
-                                        <li>稅額暴增 (甚至高達獲利的 45%)</li>
-                                        <li>若無完善規劃，將面臨巨額稅賦</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4">一般贈與</td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
-                                    受贈時的<br>
-                                    <b>1. 房屋評定現值</b><br>
-                                    <b>2. 土地公告現值</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4">夫妻贈與</td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8 bg-yellow-50">
-                                    <span class="text-red-600 font-bold">注意！</span>即便申請不課土增稅，<br>
-                                    取得成本<b>仍可能被認定為贈與時的公告現值</b>。<br>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="relative">
+                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
+                <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
+                    <div class="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center mb-4 md:mb-8">
+                            <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-20 sticky-col bg-gray-200 z-20">情境</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg text-red-700">取得成本認定 (魔鬼細節)</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">未來出售影響</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">繼承取得</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
+                                        繼承時的<br>
+                                        <b>1. 房屋評定現值</b><br>
+                                        <b>2. 土地公告現值</b>
+                                    </td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-6 text-gray-700 bg-white" rowspan="3">
+                                        <p class="mb-2 md:mb-4 text-center font-bold text-red-600 text-lg md:text-xl border-b pb-2">三者風險一致</p>
+                                        <p class="mb-2">因公告現值通常遠低於市價 (可能僅市價 30%)，導致：</p>
+                                        <ul class="list-disc pl-5 space-y-1">
+                                            <li class="font-bold text-red-600">獲利金額被大幅放大</li>
+                                            <li>稅額暴增 (甚至高達獲利的 45%)</li>
+                                            <li>若無完善規劃，將面臨巨額稅賦</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">一般贈與</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
+                                        受贈時的<br>
+                                        <b>1. 房屋評定現值</b><br>
+                                        <b>2. 土地公告現值</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray-100 font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">夫妻贈與</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8 bg-yellow-50">
+                                        <span class="text-red-600 font-bold">注意！</span>即便申請不課土增稅，<br>
+                                        取得成本<b>仍可能被認定為贈與時的公告現值</b>。<br>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
@@ -395,64 +431,67 @@
         <!-- Page 7: 高價住宅 -->
         <div class="page-break mb-12 md:mb-16">
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-6 md:mb-8 border-b-2 border-blue-200 pb-2">高價住宅課稅新制</h2>
-            <div class="overflow-x-auto -mx-4 md:mx-0 pb-2">
-                <div class="inline-block min-w-full align-middle px-4 md:px-0">
-                    <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center">
-                        <thead>
-                            <tr class="bg-theme-gold">
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-1/6">項目</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">定義 (門檻)</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">影響</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm md:text-base">
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4">中央銀行<br><span class="text-xs md:text-sm font-normal">(信用管制)</span></td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
-                                    <ul class="list-disc space-y-1">
-                                        <li><b>台北市：</b>7000 萬元</li>
-                                        <li><b>新北市：</b>6000 萬元</li>
-                                        <li><b>其他地區：</b>4000 萬元</li>
-                                    </ul>
-                                </td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8 bg-red-50">
-                                    <p class="font-bold mb-2">貸款限制：</p>
-                                    <ol class="list-decimal pl-5 space-y-1">
-                                        <li>最高只能貸款 3 成</li>
-                                        <li>不能有寬限期</li>
-                                        <li>不能增貸 (修繕/週轉金)</li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4">財政部<br><span class="text-xs md:text-sm font-normal">(課稅標準)</span></td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
-                                    <p class="mb-2 font-bold text-gray-700 border-b border-gray-300 pb-1">符合下列任一條件即適用：</p>
-                                    <ul class="list-disc space-y-2">
-                                        <li>
-                                            <b>臺北市：</b>總價 6,000 萬<br>
-                                            <span class="text-red-600">或 單價 120 萬元/坪</span>
-                                        </li>
-                                        <li>
-                                            <b>新北市：</b>總價 4,000 萬<br>
-                                            <span class="text-red-600">或 單價 75 萬元/坪</span>
-                                        </li>
-                                        <li>
-                                            <b>桃/竹/中/南/高：</b>總價 3,000 萬<br>
-                                            <span class="text-red-600">或 單價 50 萬元/坪</span>
-                                        </li>
-                                        <li>
-                                            <b>其他地區：</b>總價 2,000 萬<br>
-                                            <span class="text-red-600">或 單價 35 萬元/坪</span>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td class="border border-gray-400 p-2 md:p-4 text-center font-bold text-red-700 text-lg md:text-xl bg-red-50">
-                                    容易超過標準<br>需繳納更多稅金
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="relative">
+                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
+                <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
+                    <div class="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center">
+                            <thead>
+                                <tr class="bg-theme-gold">
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-20 sticky-col bg-theme-gold z-20">項目</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">定義 (門檻)</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-5/12">影響</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">中央銀行<br><span class="text-xs md:text-sm font-normal">(信用管制)</span></td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
+                                        <ul class="list-disc space-y-1">
+                                            <li><b>台北市：</b>7000 萬元</li>
+                                            <li><b>新北市：</b>6000 萬元</li>
+                                            <li><b>其他地區：</b>4000 萬元</li>
+                                        </ul>
+                                    </td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8 bg-red-50">
+                                        <p class="font-bold mb-2">貸款限制：</p>
+                                        <ol class="list-decimal pl-5 space-y-1">
+                                            <li>最高只能貸款 3 成</li>
+                                            <li>不能有寬限期</li>
+                                            <li>不能增貸 (修繕/週轉金)</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">財政部<br><span class="text-xs md:text-sm font-normal">(課稅標準)</span></td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-left px-4 md:px-8">
+                                        <p class="mb-2 font-bold text-gray-700 border-b border-gray-300 pb-1">符合下列任一條件即適用：</p>
+                                        <ul class="list-disc space-y-2">
+                                            <li>
+                                                <b>臺北市：</b>總價 6,000 萬<br>
+                                                <span class="text-red-600">或 單價 120 萬元/坪</span>
+                                            </li>
+                                            <li>
+                                                <b>新北市：</b>總價 4,000 萬<br>
+                                                <span class="text-red-600">或 單價 75 萬元/坪</span>
+                                            </li>
+                                            <li>
+                                                <b>桃/竹/中/南/高：</b>總價 3,000 萬<br>
+                                                <span class="text-red-600">或 單價 50 萬元/坪</span>
+                                            </li>
+                                            <li>
+                                                <b>其他地區：</b>總價 2,000 萬<br>
+                                                <span class="text-red-600">或 單價 35 萬元/坪</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="border border-gray-400 p-2 md:p-4 text-center font-bold text-red-700 text-lg md:text-xl bg-red-50">
+                                        容易超過標準<br>需繳納更多稅金
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <p class="text-xs text-gray-400 text-center mt-2 md:hidden">← 左右滑動查看表格 →</p>
@@ -463,35 +502,38 @@
             <h2 class="text-2xl md:text-3xl font-bold theme-blue text-center mb-2">舊制財產交易所得稅 (新增內容)</h2>
             <p class="text-center text-gray-500 mb-6 md:mb-8">適用對象：民國 104 年 12 月 31 日前取得之房屋</p>
             
-            <div class="overflow-x-auto -mx-4 md:mx-0 pb-2">
-                <div class="inline-block min-w-full align-middle px-4 md:px-0">
-                    <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center mb-6 md:mb-8">
-                        <thead>
-                            <tr class="bg-theme-blue-light">
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-1/6">計算方式</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-1/4">適用情況</th>
-                                <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">計算公式</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm md:text-base">
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4">核實認定</td>
-                                <td class="border border-gray-400 p-2 md:p-4">能提出原始取得成本<br>及相關費用證明者</td>
-                                <td class="border border-gray-400 p-2 md:p-4 bg-gray-50 text-left px-4 md:px-8">
-                                    <p class="font-bold text-base md:text-lg mb-2">(售價 - 成本 - 費用) x 房地比</p>
-                                    <p class="text-xs md:text-sm text-gray-500">*房地比 = 房屋評定現值 / (房屋評定現值 + 土地公告現值)</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4">標準認定</td>
-                                <td class="border border-gray-400 p-2 md:p-4">無法提出證明文件<br>(大部分人適用)</td>
-                                <td class="border border-gray-400 p-2 md:p-4 bg-gray-50 text-left px-4 md:px-8">
-                                    <p class="font-bold text-base md:text-lg mb-2">房屋評定現值 x 財產交易所得標準率</p>
-                                    <p class="text-xs md:text-sm text-gray-500">*標準率由財政部每年依各縣市區域公告<br>(例：高雄市部分區域可能為 30%~40% 不等)</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="relative">
+                <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden z-20"></div>
+                <div class="overflow-x-auto -mx-4 md:mx-0 pb-2 no-scrollbar">
+                    <div class="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table class="min-w-[600px] md:min-w-full border-collapse border border-gray-400 text-center mb-6 md:mb-8">
+                            <thead>
+                                <tr class="bg-theme-blue-light">
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-20 sticky-col bg-theme-blue-light z-20">計算方式</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg w-1/4">適用情況</th>
+                                    <th class="border border-gray-400 p-2 md:p-4 text-base md:text-lg">計算公式</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">核實認定</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">能提出原始取得成本<br>及相關費用證明者</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 bg-gray-50 text-left px-4 md:px-8">
+                                        <p class="font-bold text-base md:text-lg mb-2">(售價 - 成本 - 費用) x 房地比</p>
+                                        <p class="text-xs md:text-sm text-gray-500">*房地比 = 房屋評定現值 / (房屋評定現值 + 土地公告現值)</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-header-gray font-bold border border-gray-400 p-2 md:p-4 sticky-col z-10 shadow-sm">標準認定</td>
+                                    <td class="border border-gray-400 p-2 md:p-4">無法提出證明文件<br>(大部分人適用)</td>
+                                    <td class="border border-gray-400 p-2 md:p-4 bg-gray-50 text-left px-4 md:px-8">
+                                        <p class="font-bold text-base md:text-lg mb-2">房屋評定現值 x 財產交易所得標準率</p>
+                                        <p class="text-xs md:text-sm text-gray-500">*標準率由財政部每年依各縣市區域公告<br>(例：高雄市部分區域可能為 30%~40% 不等)</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
